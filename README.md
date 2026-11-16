@@ -12,6 +12,7 @@ A minimal, ready-to-use starter for end-to-end testing with **Playwright** and *
 - **HTML report** uploaded as a CI artifact (kept for 30 days)
 - **Pinned Node.js version** via `.nvmrc`, shared by local development and CI
 - **CI-aware config**: retries, a single worker and `forbidOnly` are enabled only when running in CI
+- **Linting and formatting** with ESLint (including Playwright-specific rules) and Prettier, enforced in CI
 
 ## Requirements
 
@@ -50,6 +51,9 @@ npm run report
 | `npx playwright test --headed`           | Run tests with a visible browser window                        |
 | `npx playwright test --ui`               | Open Playwright's UI mode to run and debug tests interactively |
 | `npm run report`                         | Open the HTML report of the last run                           |
+| `npm run lint`                           | Check the code with ESLint                                     |
+| `npm run format`                         | Format all files with Prettier                                 |
+| `npm run format:check`                   | Check formatting without changing files (used in CI)           |
 
 ## Project structure
 
@@ -62,6 +66,9 @@ playwright-ts-starter/
 │   └── example.spec.ts      # Example tests against playwright.dev
 ├── .gitignore               # Ignores node_modules, reports, .env, etc.
 ├── .nvmrc                   # Node.js version used locally and in CI
+├── .prettierignore          # Files Prettier should skip (on top of .gitignore)
+├── .prettierrc.json         # Prettier settings
+├── eslint.config.mjs        # ESLint rules (TypeScript + Playwright)
 ├── package.json             # Scripts and dev dependencies
 ├── package-lock.json        # Locked dependency versions (used by npm ci)
 └── playwright.config.ts     # Playwright configuration (browsers, retries, reporter)
@@ -74,9 +81,10 @@ The [Playwright Tests](.github/workflows/playwright.yml) workflow runs on every 
 1. Checks out the code
 2. Sets up Node.js using the version in `.nvmrc`
 3. Installs dependencies with `npm ci`
-4. Installs the browsers and their system dependencies
-5. Runs the test suite
-6. Uploads the HTML report as the `playwright-report` artifact, even when tests fail
+4. Runs ESLint and checks formatting with Prettier (fails fast, before installing browsers)
+5. Installs the browsers and their system dependencies
+6. Runs the test suite
+7. Uploads the HTML report as the `playwright-report` artifact, even when tests fail
 
 To inspect a run, open the **Actions** tab, select the run and download the `playwright-report` artifact.
 
@@ -88,6 +96,7 @@ To start a new project from this starter, click **Use this template** at the top
 
 - [ ] Page Object Model structure
 - [ ] Custom Playwright fixtures
-- [ ] ESLint and Prettier
+- [x] ESLint and Prettier
+- [ ] Type-aware linting (`no-floating-promises`) to catch missing `await` on Playwright actions
 - [ ] `.env.example` for environment-specific settings (base URL, credentials)
 - [ ] Browser caching in CI to speed up the pipeline
