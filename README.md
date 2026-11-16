@@ -43,13 +43,13 @@ npm run report
 
 ### Useful commands
 
-| Command | Description |
-| --- | --- |
-| `npm test` | Run all tests in all browsers (headless) |
-| `npx playwright test --project=chromium` | Run tests in a single browser |
-| `npx playwright test --headed` | Run tests with a visible browser window |
-| `npx playwright test --ui` | Open Playwright's UI mode to run and debug tests interactively |
-| `npm run report` | Open the HTML report of the last run |
+| Command                                  | Description                                                    |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| `npm test`                               | Run all tests in all browsers (headless)                       |
+| `npx playwright test --project=chromium` | Run tests in a single browser                                  |
+| `npx playwright test --headed`           | Run tests with a visible browser window                        |
+| `npx playwright test --ui`               | Open Playwright's UI mode to run and debug tests interactively |
+| `npm run report`                         | Open the HTML report of the last run                           |
 
 ## Project structure
 
