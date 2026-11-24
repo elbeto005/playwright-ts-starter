@@ -1,15 +1,12 @@
-import { HomePage } from '../pages/home.page';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
 
-test('has title', async ({ page }) => {
-  const homePage = new HomePage(page);
+test('has title', async ({ page, homePage }) => {
   await homePage.goto();
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('get started link', async ({ page }) => {
-  const homePage = new HomePage(page);
+test('get started link', async ({ page, homePage }) => {
   await homePage.goto();
 
   // Click the get started link.
