@@ -13,6 +13,7 @@ A minimal, ready-to-use starter for end-to-end testing with **Playwright** and *
 - **Pinned Node.js version** via `.nvmrc`, shared by local development and CI
 - **CI-aware config**: retries, a single worker and `forbidOnly` are enabled only when running in CI
 - **Linting and formatting** with ESLint (including Playwright-specific rules) and Prettier, enforced in CI
+- **Page Object Model with custom fixtures**: tests receive page objects ready to use, with no setup code in the test
 
 ## Requirements
 
@@ -62,8 +63,12 @@ playwright-ts-starter/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml   # CI pipeline: install, run tests, upload report
+├── fixtures/
+│   └── index.ts             # Custom fixtures: page objects ready to use in tests
+├── pages/
+│   └── home.page.ts         # Example page object for the playwright.dev home page
 ├── tests/
-│   └── example.spec.ts      # Example tests against playwright.dev
+│   └── home.spec.ts         # Example tests that use the homePage fixture
 ├── .gitignore               # Ignores node_modules, reports, .env, etc.
 ├── .nvmrc                   # Node.js version used locally and in CI
 ├── .prettierignore          # Files Prettier should skip (on top of .gitignore)
@@ -71,7 +76,7 @@ playwright-ts-starter/
 ├── eslint.config.mjs        # ESLint rules (TypeScript + Playwright)
 ├── package.json             # Scripts and dev dependencies
 ├── package-lock.json        # Locked dependency versions (used by npm ci)
-└── playwright.config.ts     # Playwright configuration (browsers, retries, reporter)
+└── playwright.config.ts     # Playwright configuration (baseURL, browsers, retries, reporter)
 ```
 
 ## Continuous Integration
@@ -90,12 +95,17 @@ To inspect a run, open the **Actions** tab, select the run and download the `pla
 
 ## Using this template
 
-To start a new project from this starter, click **Use this template** at the top of the repository page, or clone it and point it to a new remote. Then replace `tests/example.spec.ts` with your own tests.
+1. Click **Use this template** at the top of the repository page to create your own repository, then clone it.
+2. Set `baseURL` in `playwright.config.ts` to the application you want to test.
+3. Remove the examples: `pages/home.page.ts`, `tests/home.spec.ts` and the `homePage` fixture in `fixtures/index.ts`.
+4. Add a page object for each page of your app in `pages/` (for example `login.page.ts`).
+5. Register each page object as a fixture in `fixtures/index.ts`.
+6. Write your tests in `tests/`, importing `test` and `expect` from `../fixtures`.
 
 ## Roadmap
 
-- [ ] Page Object Model structure
-- [ ] Custom Playwright fixtures
+- [x] Page Object Model structure
+- [x] Custom Playwright fixtures
 - [x] ESLint and Prettier
 - [ ] Type-aware linting (`no-floating-promises`) to catch missing `await` on Playwright actions
 - [ ] `.env.example` for environment-specific settings (base URL, credentials)
