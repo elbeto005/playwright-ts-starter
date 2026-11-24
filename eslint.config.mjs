@@ -12,6 +12,21 @@ export default defineConfig(
   eslint.configs.recommended,
   tseslint.configs.recommended,
 
+  // Type-aware rules: ESLint asks TypeScript about types (uses tsconfig.json)
+  {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      // Catches a missing `await` on async calls such as page.goto()
+      '@typescript-eslint/no-floating-promises': 'error',
+    },
+  },
+
   // Playwright rules, only for test files
   {
     files: ['tests/**'],
