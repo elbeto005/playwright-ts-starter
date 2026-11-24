@@ -13,6 +13,7 @@ A minimal, ready-to-use starter for end-to-end testing with **Playwright** and *
 - **Pinned Node.js version** via `.nvmrc`, shared by local development and CI
 - **CI-aware config**: retries, a single worker and `forbidOnly` are enabled only when running in CI
 - **Linting and formatting** with ESLint (including Playwright-specific rules) and Prettier, enforced in CI
+- **Type-aware linting**: ESLint uses TypeScript type information to catch a missing `await` on async calls
 - **Page Object Model with custom fixtures**: tests receive page objects ready to use, with no setup code in the test
 
 ## Requirements
@@ -76,7 +77,8 @@ playwright-ts-starter/
 ├── eslint.config.mjs        # ESLint rules (TypeScript + Playwright)
 ├── package.json             # Scripts and dev dependencies
 ├── package-lock.json        # Locked dependency versions (used by npm ci)
-└── playwright.config.ts     # Playwright configuration (baseURL, browsers, retries, reporter)
+├── playwright.config.ts     # Playwright configuration (baseURL, browsers, retries, reporter)
+└── tsconfig.json            # TypeScript settings (also used by ESLint for type-aware rules)
 ```
 
 ## Continuous Integration
@@ -107,6 +109,6 @@ To inspect a run, open the **Actions** tab, select the run and download the `pla
 - [x] Page Object Model structure
 - [x] Custom Playwright fixtures
 - [x] ESLint and Prettier
-- [ ] Type-aware linting (`no-floating-promises`) to catch missing `await` on Playwright actions
+- [x] Type-aware linting (`no-floating-promises`) to catch missing `await` on Playwright actions
 - [ ] `.env.example` for environment-specific settings (base URL, credentials)
 - [ ] Browser caching in CI to speed up the pipeline
