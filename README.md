@@ -15,6 +15,7 @@ A minimal, ready-to-use starter for end-to-end testing with **Playwright** and *
 - **Linting and formatting** with ESLint (including Playwright-specific rules) and Prettier, enforced in CI
 - **Type-aware linting**: ESLint uses TypeScript type information to catch a missing `await` on async calls
 - **Page Object Model with custom fixtures**: tests receive page objects ready to use, with no setup code in the test
+- **Environment variables** loaded from an optional `.env` file (for example, the base URL), with safe defaults for CI
 
 ## Requirements
 
@@ -34,15 +35,28 @@ nvm use
 # 3. Install the exact dependencies from package-lock.json
 npm ci
 
-# 4. Download the browsers Playwright needs
+# 4. (Optional) Create your local environment file
+cp .env.example .env
+
+# 5. Download the browsers Playwright needs
 npx playwright install
 
-# 5. Run the tests
+# 6. Run the tests
 npm test
 
-# 6. Open the HTML report of the last run
+# 7. Open the HTML report of the last run
 npm run report
 ```
+
+### Environment variables
+
+Settings that change between environments live in a local `.env` file, which is ignored by Git. Copy [`.env.example`](.env.example) to `.env` and adjust the values. If `.env` does not exist (for example, in CI), the defaults are used.
+
+| Variable   | Description                       | Default                  |
+| ---------- | --------------------------------- | ------------------------ |
+| `BASE_URL` | URL of the application under test | `https://playwright.dev` |
+
+Never commit real credentials: add new variables to `.env.example` without secret values, and keep the real ones only in `.env`.
 
 ### Useful commands
 
@@ -70,6 +84,7 @@ playwright-ts-starter/
 │   └── home.page.ts         # Example page object for the playwright.dev home page
 ├── tests/
 │   └── home.spec.ts         # Example tests that use the homePage fixture
+├── .env.example             # Template for local environment variables (copy to .env)
 ├── .gitignore               # Ignores node_modules, reports, .env, etc.
 ├── .nvmrc                   # Node.js version used locally and in CI
 ├── .prettierignore          # Files Prettier should skip (on top of .gitignore)
@@ -110,5 +125,5 @@ To inspect a run, open the **Actions** tab, select the run and download the `pla
 - [x] Custom Playwright fixtures
 - [x] ESLint and Prettier
 - [x] Type-aware linting (`no-floating-promises`) to catch missing `await` on Playwright actions
-- [ ] `.env.example` for environment-specific settings (base URL, credentials)
+- [x] `.env.example` for environment-specific settings (base URL, credentials)
 - [ ] Browser caching in CI to speed up the pipeline
