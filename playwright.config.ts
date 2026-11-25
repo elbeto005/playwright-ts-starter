@@ -1,12 +1,14 @@
+import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * Load variables from .env into process.env, if the file exists.
+ * Copy .env.example to .env to customize them locally.
+ * CI has no .env file, so the defaults below are used there.
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+if (existsSync('.env')) {
+  process.loadEnvFile('.env');
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -26,7 +28,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://playwright.dev',
+    baseURL: process.env.BASE_URL ?? 'https://playwright.dev',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
