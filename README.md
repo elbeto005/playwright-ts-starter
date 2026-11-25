@@ -101,7 +101,7 @@ playwright-ts-starter/
 The [Playwright Tests](.github/workflows/playwright.yml) workflow runs on every push and pull request to `main`:
 
 1. Checks out the code
-2. Sets up Node.js using the version in `.nvmrc`
+2. Sets up Node.js using the version in `.nvmrc`, with npm dependencies cached between runs
 3. Installs dependencies with `npm ci`
 4. Runs ESLint and checks formatting with Prettier (fails fast, before installing browsers)
 5. Installs the browsers and their system dependencies
