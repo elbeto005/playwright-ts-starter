@@ -126,4 +126,9 @@ To inspect a run, open the **Actions** tab, select the run and download the `pla
 - [x] ESLint and Prettier
 - [x] Type-aware linting (`no-floating-promises`) to catch missing `await` on Playwright actions
 - [x] `.env.example` for environment-specific settings (base URL, credentials)
-- [ ] Browser caching in CI to speed up the pipeline
+- [x] npm dependency caching in CI (pipeline went from ~106 s to ~59 s)
+- [x] Browser caching in CI: evaluated and discarded. Restoring the cache plus installing system dependencies took as long as a full browser install, so it added complexity with no gain
+
+### Nice to have
+
+- [ ] Dependabot to open automated pull requests for dependency updates
